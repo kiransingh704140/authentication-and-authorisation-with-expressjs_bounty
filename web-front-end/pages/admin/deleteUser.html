@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    <link rel="stylesheet" href="../../styles/styles.css">
+</head>
+<body>
+    <h1>Want To Delete a User ?</h1>
+    
+
+    <form id="delete-user-form">
+        <button style="background-color: red;" id="delete-user-btn">Delete User</button>
+    </form>
+
+    <script>
+   document.getElementById('delete-user-btn').addEventListener('click', async () => {
+            // Prompt user for username
+            const username = prompt('Enter the username of the user to delete:');
+            
+            if (username) {
+                try {
+                    const response = await fetch('https://zany-space-funicular-q7945v9pg75wh9p7-4001.app.github.dev/auth/delete/user', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username }),
+                        credentials: "include"
+                    });
+                   
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        alert(`Success: ${result.message}`);
+                    } else {
+                        alert(`Error: ${result.message}`);
+                    }
+                } catch (error) {
+                    alert("An unexpected error occurred while trying to delete the user.");
+                }
+            } else {
+                alert("Username is required to delete a user.");
+            }
+        });
+  </script>
+</body>
+</html>
